@@ -7,17 +7,22 @@
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
     
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>csv表にするマン</title>
     <link href="https://thomasf.github.io/solarized-css/solarized-light.min.css" rel="stylesheet">
     <link href="tables.css" rel="stylesheet">
+
+    <script type="text/javascript" src="localstorage.js"></script>
+    <script type="text/javascript" src="tables.js"></script>
   </head>
 
-  <body>
-    <h3>csv表にするマン</h3>
-    csv形式のデータをソート機能付きのHTMLのテーブルとして表示できます。<br>
-    <form method="get" action="tables.html">
-      <input type="text" name="name" placeholder="表の名前">
-      <input type="submit" value="開始">
-    </form>
+  <body onload="init();">
+    <h3 id="name"></h3>
+    <div id="tables" comment="ここに作成した表が入る"></div>
+    <br>
+    <input type="button" value="表を追加" onclick="add_new_table();">
+    
+    <br>
+    <br>
+    <br>
+    <a href="index.html">Top Page</a>
   </body>
 </html>

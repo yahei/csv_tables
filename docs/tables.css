@@ -1,0 +1,45 @@
+/* フォント */
+body, h1, h2, h3, h4 {
+  font-family: "UD デジタル 教科書体 N-R", "游ゴシック", "YuGothic", "メイリオ", meiryo, sans-serif;
+}
+
+/* tableのデザイン */
+table {
+  width: 100%;
+}
+thead {
+  font-weight: bold;
+}
+td, th {
+  border: 2px solid #fdf6e3; /* 境界線を実線で指定する */
+  background-color: #eee8d5;/* 背景色を指定する */
+}
+th {
+  font-weight: inherit;
+}
+
+/* 編集・表示画面のデザイン */
+.table_unit {
+  /*background-color: #eee8d5;/* 背景色を指定する */
+  margin: 1em 0em;
+  padding: 10px;
+  box-shadow: 0 0 16px #eee8d5;
+}
+
+.csv_field {
+  box-sizing: border-box;
+  width: 100%;
+  height: 15em;
+  margin: 0em 0em;
+  padding: 0em;
+  border:1px solid #586e75;
+  resize: vertical;
+}
+
+textarea, input {
+  margin: 0.5em 0.5em;
+}
+
+.view {
+  display: none;
+}
