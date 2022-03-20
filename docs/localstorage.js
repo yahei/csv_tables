@@ -16,11 +16,19 @@ function writeToLocalStorage(dbname, key, value) {
     json = {};
   }
 
-  // キーと値を書き込む
-  json[key] = value;
+  // キーと値を書き込む/値が空なら消す
+  if (value.length > 0) {
+    json[key] = value;
+  } else {
+    delete json[key];
+  }
 
-  // localStorageを更新
-  window.localStorage.setItem(dbname, JSON.stringify(json));
+  // localStorageを更新/全て空なら消す
+  if (JSON.stringify(json) == '{}') {
+    window.localStorage.removeItem(dbname);
+  } else {
+    window.localStorage.setItem(dbname, JSON.stringify(json));
+  }
 }
 
 // データ削除
