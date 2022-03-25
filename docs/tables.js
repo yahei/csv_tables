@@ -138,13 +138,14 @@ function add_new_table(table_id=gen_table_id(), csv='', title='') {
         <div class="edit" comment="csvの入力などの編集画面">
           <input type="text" value="${title}" class="title" placeholder="表のタイトル">
           <textarea class="csv_field" placeholder="csvをここに入力">${csv}</textarea><br>
-          <input type="button" value="編集完了" onclick="change_view_mode('${table_id}'); save_tables();">
-          <input type="button" value="表を削除" onclick="delete_table('${table_id}'); save_tables();">
+          <input class="table_button" type="button" value="編集完了" onclick="change_view_mode('${table_id}'); save_tables();">
+          <input class="table_button" type="button" value="表を削除" onclick="delete_table('${table_id}'); save_tables();">
         </div>
         <div class="view" comment="テーブルを表示する画面">
           <div class="title" comment="表のタイトル">${title}</div>
+          <a class="fold" type="button" onclick="fold('${table_id}', true);">▲</a>
           <div class="table" comment="表の本体"></div>
-          <input type="button" value="表を編集" onclick="change_edit_mode('${table_id}');">
+          <input class="table_button" type="button" value="表を編集" onclick="change_edit_mode('${table_id}');">
         </div>
       </div>`;
 
@@ -207,4 +208,25 @@ function init() {
 
   // セーブデータのロード
   load_tables();
+}
+
+// 表を折りたたむ処理
+function fold(table_id, sw) {
+  view  = document.getElementById(table_id).
+          getElementsByClassName("view")[0];
+  table = view.getElementsByClassName("table")[0];
+  edit_button = view.getElementsByClassName("table_button")[0];
+  fold_button = view.getElementsByClassName("fold")[0];
+
+  if (sw) {
+    table.style.display = 'none';
+    edit_button.style.display = 'none';
+    fold_button.innerHTML = "▼";
+    fold_button.onclick = () => {fold(table_id, false);};
+  } else {
+    table.style.display = 'block';
+    edit_button.style.display = 'block';
+    fold_button.innerHTML = "▲";
+    fold_button.onclick = () => {fold(table_id, true);};
+  }
 }
