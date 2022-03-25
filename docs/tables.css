@@ -43,3 +43,7 @@ textarea, input {
 .view {
   display: none;
 }
+
+.title {
+  margin: 0.5em 0em;
+}

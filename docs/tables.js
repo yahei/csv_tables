@@ -71,6 +71,7 @@ function sort_matrix(matrix, sort_index, order=true) {
 
 // 表の編集完了ボタン
 function change_view_mode(div_id) {
+  // --- 表の更新 ----
   // 指定された要素からcsv読み取り
   csv = document.getElementById(div_id).
         getElementsByClassName('edit')[0].
@@ -89,6 +90,18 @@ function change_view_mode(div_id) {
               getElementsByClassName('view')[0].
               getElementsByClassName('table')[0];
   old_table.replaceChildren(new_table);
+
+  // --- タイトルの更新 ---
+  // 入力されたタイトルを読み取る
+  new_title = document.getElementById(div_id).
+              getElementsByClassName('edit')[0].
+              getElementsByClassName('title')[0].value;
+
+  // viewのタイトルを更新する
+  document.getElementById(div_id).
+  getElementsByClassName('view')[0].
+  getElementsByClassName('title')[0].innerHTML = new_title;
+
 
   // edit画面を非表示にし、view画面を表示する
   document.getElementById(div_id).
@@ -117,19 +130,20 @@ function gen_table_id() {
 }
 
 // 表の追加ボタン
-function add_new_table(table_id=gen_table_id(), csv='') {
+function add_new_table(table_id=gen_table_id(), csv='', title='') {
   // 要素を作る
   new_div = document.createElement('div');
   new_div.innerHTML = `
       <div id="${table_id}" class="table_unit" comment="これ1つが表1つぶん">
         <div class="edit" comment="csvの入力などの編集画面">
+          <input type="text" value="${title}" class="title" placeholder="表のタイトル">
           <textarea class="csv_field" placeholder="csvをここに入力">${csv}</textarea><br>
           <input type="button" value="編集完了" onclick="change_view_mode('${table_id}'); save_tables();">
           <input type="button" value="表を削除" onclick="delete_table('${table_id}'); save_tables();">
         </div>
         <div class="view" comment="テーブルを表示する画面">
-          <table class="table">
-          </table>
+          <div class="title" comment="表のタイトル">${title}</div>
+          <div class="table" comment="表の本体"></div>
           <input type="button" value="表を編集" onclick="change_edit_mode('${table_id}');">
         </div>
       </div>`;
@@ -150,7 +164,9 @@ function save_tables() {
     table_id = elem.id
     csv = elem.getElementsByClassName('edit')[0].
           getElementsByClassName('csv_field')[0].value;
-    json.push({'id':elem.id, 'csv':csv});
+    title = elem.getElementsByClassName('edit')[0].
+            getElementsByClassName('title')[0].value;
+    json.push({'id':elem.id, 'csv':csv, 'title':title});
   });
 
   // 保存
@@ -165,7 +181,7 @@ function load_tables() {
 
   // 表を復元する
   json.forEach(elem => {
-    add_new_table(elem['id'], elem['csv']);
+    add_new_table(elem['id'], elem['csv'], elem['title']);
     change_view_mode(elem['id']);
   });
 }
