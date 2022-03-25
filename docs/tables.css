@@ -53,3 +53,9 @@ textarea, input {
   margin: 0.5em 0em;
   float: left;
 }
+
+.table {
+  overflow: auto;
+  width: 100%;
+  max-height: 50em;
+}
